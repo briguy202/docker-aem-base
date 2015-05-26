@@ -102,11 +102,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   #BRIAN EDIT
-  config.vm.network :forwarded_port, host: 4502, guest: 4502
-  config.vm.network :forwarded_port, host: 4503, guest: 4503
+  config.vm.network "forwarded_port", host: 4502, guest: 4502
+  config.vm.network "forwarded_port", host: 4503, guest: 4503
 
   #BRIAN EDIT
-  config.vm.post_up_message = "Hey, this is the post message..."
+  config.vm.post_up_message = "Your Linux VM running Docker containers is now active."
 
   # Allow Mac OS X docker client to connect to Docker without TLS auth.
   # https://github.com/deis/deis/issues/2230#issuecomment-72701992
