@@ -1,6 +1,8 @@
 # This Vagrantfile was created by docker-osx-dev. It is used to create a 
 # productive development environment with Docker, Vagrant, and Rsync on OS X.
 # See https://github.com/brikis98/docker-osx-dev for more info.
+# See also https://raw.githubusercontent.com/brikis98/docker-osx-dev/master/setup.sh
+# See also https://raw.githubusercontent.com/brikis98/docker-osx-dev/master/docker-osx-dev
 
 DOCKER_COMPOSE_FILE = "docker-compose.yml"
 DOCKER_COMPOSE_VOLUMES_KEY = "volumes"
@@ -83,8 +85,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.gui = false
-    v.name = VAGRANT_FOLDER_NAME + "_boot2docker"
-    v.cpus = 1
+    #BRIAN EDIT - want to share VM instances
+    v.name = "boot2docker"
+    #v.name = VAGRANT_FOLDER_NAME + "_boot2docker"
+    #BRIAN EDIT
+    v.cpus = 2
+    #v.cpus = 1
     #v.memory = 2048
     #BRIAN EDIT
     v.memory = 8192
@@ -97,6 +103,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   #BRIAN EDIT
   config.vm.network :forwarded_port, host: 4502, guest: 4502
+  config.vm.network :forwarded_port, host: 4503, guest: 4503
+
+  #BRIAN EDIT
+  config.vm.post_up_message = "Hey, this is the post message..."
 
   # Allow Mac OS X docker client to connect to Docker without TLS auth.
   # https://github.com/deis/deis/issues/2230#issuecomment-72701992
@@ -105,5 +115,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       echo 'DOCKER_TLS=no' >> /var/lib/boot2docker/profile
       /etc/init.d/docker restart
     EOT
-  end  
+  end
 end
