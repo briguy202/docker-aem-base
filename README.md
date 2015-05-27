@@ -3,7 +3,13 @@ AEM Base Docker Image
 
 This is the base Docker image for AEM.
 
+## Depends on
+Vagrant, VirtualBox, Docker
+
 ## Get Started
+Start Vagrant which will get your VM (virtualbox) going:
+`vagrant up`
+
 To create the image, execute the following:
 `docker build --tag="yourname/author" .`
 
