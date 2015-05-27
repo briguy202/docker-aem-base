@@ -69,12 +69,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # in one step rather than creating a temp file or updating one small piece at
   # a time. Both of these reduce unnecessary restarts and recompiles in file 
   # watch mechanisms.
-  folders_to_sync.each do |folder|
-    config.vm.synced_folder folder[:src], folder[:dest],
-      type: "rsync",
-      rsync__exclude: excludes,
-      rsync__args: ["--verbose", "--archive", "--delete", "-z", "--chmod=ugo=rwX", "--omit-dir-times", "--inplace", "--whole-file"]
-  end
+#  folders_to_sync.each do |folder|
+#    config.vm.synced_folder folder[:src], folder[:dest],
+#      type: "rsync",
+#      rsync__exclude: excludes,
+#      rsync__args: ["--verbose", "--archive", "--delete", "-z", "--chmod=ugo=rwX", "--omit-dir-times", "--inplace", "--whole-file"]
+#  end
 
   # Decreate this number for faster syncing on small projects; increase it for
   # better performance on large projects. For more info, see 
