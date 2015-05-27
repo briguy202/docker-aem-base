@@ -6,6 +6,9 @@ This is the base Docker image for AEM.
 ## Depends on
 Vagrant, VirtualBox, Docker
 
+Also, install the vagrant-gatling-rsync plugin
+`vagrant plugin install vagrant-gatling-rsync`
+
 ## Get Started
 Start Vagrant which will get your VM (virtualbox) going:
 `vagrant up`
