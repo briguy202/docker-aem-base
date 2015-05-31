@@ -23,12 +23,12 @@ export DOCKER_HOST="tcp://${DOCKER_HOST_IP}:2375"
 
 Then create the image, executing the following:
 ```bash
-`docker build --tag="bhibma/aem-base" .`
+docker build --tag="bhibma/aem-base" .
 ```
 
 Then to run the image, execute:
 ```bash
-`docker run -i -d -p 4502:4502 bhibma/aem-base --name author`
+docker run -i -d -p 4502:4502 bhibma/aem-base --name author
 ```
 
 Similarly to run for publish, execute:
