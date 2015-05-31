@@ -21,21 +21,38 @@ export DOCKER_HOST_IP=$(vagrant ssh-config | sed -n "s/[ ]*HostName[ ]*//gp")
 export DOCKER_HOST="tcp://${DOCKER_HOST_IP}:2375"
 ```
 
-Then create the image, executing the following:
+Then create the base image by executing the following:
 ```bash
 docker build --tag="bhibma/aem-base" .
 ```
 
-Then to run the image, execute:
+Next, build the author and publish images off the base image:
 ```bash
-docker run -i -d -p 4502:4502 bhibma/aem-base --name author
+cd aem-author
+docker build --tag="bhibma/aem-author" .
+cd ../aem-publish
+docker build --tag="bhibma/aem-publish" .
 ```
 
-Similarly to run for publish, execute:
+Then to run the author and publish images, execute:
 ```bash
-docker run -i -d -p 4503:4503 bhibma/aem-base --name publish
+docker run -i -d -p 4502:4502 --name author bhibma/aem-author
+docker run -i -d -p 4503:4503 --name publish bhibma/aem-publish
 ```
 
 At this point you have two containers running - one for author and one for publish - and both are starting up AEM for the first time.
-This will be very slow.  To speed things up on subsequent startups, run a `docker commit -m "Running Instance" <container_id> <tag_name>`.
-Once that has been run, it should take <1 minute to start up the AEM instance from this new container.
+This will be very slow.  To speed things up on subsequent startups, we need to commit the running instance.  We will first tag the base
+image so we can start a container from it if we want in the future:
+```bash
+docker tag bhibma/aem-author bhibma/aem-author:base
+docker tag bhibma/aem-publish bhibma/aem-publish:base
+```
+
+Then next we will commit the running container as the 'latest' tag on the image so that when we start using only 'bhibma/aem-author' or 
+'bhibma/aem-publish' without any tag specified, it will run the running image, not the base non-running image.
+```bash
+docker commit -m "Running Instance" <author_container_id> bhibma/aem-author
+docker commit -m "Running Instance" <publish_container_id> bhibma/aem-publish
+```
+
+Once that has been run, it should take <1 minute to start up the AEM instance from this these running containers.
