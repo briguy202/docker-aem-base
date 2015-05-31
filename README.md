@@ -22,9 +22,18 @@ export DOCKER_HOST="tcp://${DOCKER_HOST_IP}:2375"
 ```
 
 Then create the image, executing the following:
-`docker build --tag="yourname/author" .`
+```bash
+`docker build --tag="bhibma/aem-base" .`
+```
 
 Then to run the image, execute:
-`docker run -i -d -p 4502:4502 aem/author:6.0`
+```bash
+`docker run -i -d -p 4502:4502 bhibma/aem-base --name author`
+```
 
-At this point the container is running and starting up AEM for the first time.  This will be very slow.  To speed things up on subsequent startups, run a `docker commit -m "Running Instance" <container_id> <tag_name>`.  Once that has been run, it should take <1 minute to start up the AEM instance from this new container.
+Similarly to run for publish, execute:
+`docker run -i -d -p 4503:4503 bhibma/aem-base --name publish`
+
+At this point you have two containers running - one for author and one for publish - and both are starting up AEM for the first time.
+This will be very slow.  To speed things up on subsequent startups, run a `docker commit -m "Running Instance" <container_id> <tag_name>`.
+Once that has been run, it should take <1 minute to start up the AEM instance from this new container.
