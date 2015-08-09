@@ -28,30 +28,25 @@ docker build --tag="bhibma/aem-base" .
 
 Next, build the author and publish images off the base image:
 ```bash
-cd aem-author
-docker build --tag="bhibma/aem-author" .
-cd ../aem-publish
-docker build --tag="bhibma/aem-publish" .
+docker build --tag="bhibma/aem-author" ./aem-author/ && docker build --tag="bhibma/aem-publish" ./aem-publish/
 ```
 
 Then to run the author and publish images, execute:
 ```bash
-docker run -i -d -p 4503:4503 --name publish bhibma/aem-publish && docker run -i -d -p 4502:4502 --name author --link publish:publish bhibma/aem-author
+docker run -i -d -p 4503:4503 -p 4513:4513 --name publish bhibma/aem-publish && docker run -i -d -p 4502:4502 -p 4512:4512 --name author --link publish:publish bhibma/aem-author
 ```
 
 At this point you have two containers running - one for author and one for publish - and both are starting up AEM for the first time.
 This will be very slow.  To speed things up on subsequent startups, we need to commit the running instance.  We will first tag the base
 image so we can start a container from it if we want in the future:
 ```bash
-docker tag bhibma/aem-author bhibma/aem-author:base
-docker tag bhibma/aem-publish bhibma/aem-publish:base
+docker tag bhibma/aem-author bhibma/aem-author:base && docker tag bhibma/aem-publish bhibma/aem-publish:base
 ```
 
 Then next we will commit the running container as the 'latest' tag on the image so that when we start using only 'bhibma/aem-author' or 
 'bhibma/aem-publish' without any tag specified, it will run the running image, not the base non-running image.
 ```bash
-docker commit -m "Running Instance" author bhibma/aem-author
-docker commit -m "Running Instance" publish bhibma/aem-publish
+docker commit -m "Running Instance" author bhibma/aem-author && docker commit -m "Running Instance" publish bhibma/aem-publish
 ```
 
 Once that has been run, it should take <1 minute to start up the AEM instance from this these running containers.

@@ -51,7 +51,9 @@ CQ_RUNMODE='dev,publish,nosamplecontent'
 CQ_JAAS_CONFIG='etc/jaas.config'
 
 # default JVM options
-CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M'
+# Commented by Brian to allow for debugging.
+#CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M'
+CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=4513'
 
 # file size limit (ulimit)
 CQ_FILE_SIZE_LIMIT=8192

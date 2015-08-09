@@ -15,4 +15,3 @@ ADD .sources/license.properties /apps/aem/license.properties
 RUN java -jar cq6.jar -unpack -v
 
 ENV CQ_FOREGROUND y
-ENV CQ_JVM_OPTS   "-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M"
