@@ -51,9 +51,7 @@ CQ_RUNMODE='dev,author,nosamplecontent'
 CQ_JAAS_CONFIG='etc/jaas.config'
 
 # default JVM options
-# Commented by Brian to allow for debugging.
-#CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M'
-CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=4512'
+CQ_JVM_OPTS='-server -Xmx1524M -Xms512M -XX:MaxPermSize=512M'
 
 # file size limit (ulimit)
 CQ_FILE_SIZE_LIMIT=8192
@@ -75,6 +73,10 @@ fi
 BIN_PATH=$(dirname $0)
 cd $BIN_PATH/../..
 START_OPTS='-use-control-port'
+
+# Added by Brian on 8/9/15 to allow for remote debugging.  Attempted use of CQ_JVM_OPTS, but that didn't seem to work for some reason.
+START_OPTS="${START_OPTS} -debug 4512"
+
 if [ $CQ_PORT ]; then
 	START_OPTS="${START_OPTS} -p ${CQ_PORT}"
 fi
